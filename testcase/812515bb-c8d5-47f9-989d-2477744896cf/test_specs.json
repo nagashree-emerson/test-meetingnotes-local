@@ -1,0 +1,16 @@
+{
+  "name": "Integration - Exception Handling for Malformed JSON",
+  "description": "Checks that malformed JSON in a POST to /query triggers the correct validation error handler.",
+  "test_type": "integration",
+  "input": "POST request to /query with malformed JSON body.",
+  "output": "HTTP 400 or 422 response with error message about malformed JSON.",
+  "success_criteria": [
+    "HTTP status code is 400 or 422",
+    "response.success is False",
+    "response.error contains 'Malformed JSON'"
+  ],
+  "error_scenarios": [
+    "Handler not triggered",
+    "Unexpected error format"
+  ]
+}
