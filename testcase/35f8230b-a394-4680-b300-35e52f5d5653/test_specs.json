@@ -1,0 +1,17 @@
+{
+  "name": "Functional - Successful Meeting Notes Summarization",
+  "description": "Validates that the /query endpoint returns a successful summary when relevant meeting notes are present.",
+  "test_type": "functional",
+  "input": "POST request to /query endpoint with all required configuration and valid Azure/OpenAI credentials.",
+  "output": "A QueryResponse with success=True, a non-empty summary, error=None.",
+  "success_criteria": [
+    "HTTP status code is 200",
+    "response.success is True",
+    "response.summary is a non-empty string",
+    "response.error is None"
+  ],
+  "error_scenarios": [
+    "Missing or invalid credentials",
+    "Azure AI Search or OpenAI API failure"
+  ]
+}
