@@ -1,0 +1,15 @@
+{
+  "name": "Security - Content Safety Decorator Enforcement",
+  "description": "Verifies that endpoints and key methods are wrapped with with_content_safety and do not raise unhandled content safety errors.",
+  "test_type": "security",
+  "input": "Trigger a validation or generic exception via /query or /health endpoints.",
+  "output": "Response is returned with content safety checks applied (no unhandled exceptions).",
+  "success_criteria": [
+    "No unhandled content safety errors in logs",
+    "Response is returned with expected error structure"
+  ],
+  "error_scenarios": [
+    "Unhandled content safety exception",
+    "Decorator not applied"
+  ]
+}
