@@ -1,0 +1,15 @@
+{
+  "name": "Security - Azure AI Search Credentials Validation",
+  "description": "Ensures AzureAISearchClient.get_client raises ValueError if any credential is missing.",
+  "test_type": "security",
+  "input": "Call AzureAISearchClient.get_client() with missing endpoint, index name, or API key.",
+  "output": "ValueError is raised indicating incomplete credentials.",
+  "success_criteria": [
+    "ValueError is raised",
+    "Error message contains 'Azure AI Search credentials are not fully configured.'"
+  ],
+  "error_scenarios": [
+    "No error raised when credentials are missing",
+    "Incorrect error message"
+  ]
+}
