@@ -1,0 +1,17 @@
+{
+  "name": "Integration - End-to-End Summarization with Real Azure/OpenAI",
+  "description": "Tests the integration of Azure AI Search, OpenAI, and the agent by performing a real summarization.",
+  "test_type": "integration",
+  "input": "POST request to /query endpoint with valid configuration and real Azure/OpenAI services.",
+  "output": "A QueryResponse with a valid summary generated from actual meeting notes.",
+  "success_criteria": [
+    "response.success is True",
+    "response.summary contains expected content from meeting notes",
+    "response.error is None"
+  ],
+  "error_scenarios": [
+    "Network issues",
+    "Service misconfiguration",
+    "API quota exceeded"
+  ]
+}
