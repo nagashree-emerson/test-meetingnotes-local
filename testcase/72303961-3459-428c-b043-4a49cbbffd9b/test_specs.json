@@ -1,0 +1,15 @@
+{
+  "name": "Performance - Query Endpoint Response Time Under Load",
+  "description": "Measures the response time of the /query endpoint under concurrent requests.",
+  "test_type": "performance",
+  "input": "Simultaneous POST requests to /query endpoint (e.g., 10-50 concurrent).",
+  "output": "Average and maximum response times recorded.",
+  "success_criteria": [
+    "Average response time is within acceptable threshold (e.g., < 5 seconds)",
+    "No requests time out"
+  ],
+  "error_scenarios": [
+    "Requests time out",
+    "Performance degradation under load"
+  ]
+}
