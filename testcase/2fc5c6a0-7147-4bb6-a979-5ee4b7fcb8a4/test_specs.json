@@ -1,0 +1,15 @@
+{
+  "name": "Security - Missing Azure OpenAI API Key",
+  "description": "Verifies that the agent raises a ValueError if AZURE_OPENAI_API_KEY is not configured.",
+  "test_type": "security",
+  "input": "Call get_llm_client() with AZURE_OPENAI_API_KEY unset.",
+  "output": "ValueError is raised with appropriate error message.",
+  "success_criteria": [
+    "ValueError is raised",
+    "Error message contains 'AZURE_OPENAI_API_KEY not configured'"
+  ],
+  "error_scenarios": [
+    "No error raised when key is missing",
+    "Incorrect error message"
+  ]
+}
