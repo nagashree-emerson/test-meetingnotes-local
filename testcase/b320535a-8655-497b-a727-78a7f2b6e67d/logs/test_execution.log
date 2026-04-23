@@ -1,0 +1,417 @@
+=== PYTEST EXECUTION LOG ===
+
+Exit Code: 1
+
+STDOUT:
+============================= test session starts =============================
+platform win32 -- Python 3.12.7, pytest-9.0.3, pluggy-1.6.0 -- C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Scripts\python.exe
+cachedir: .pytest_cache
+metadata: {'Python': '3.12.7', 'Platform': 'Windows-11-10.0.26200-SP0', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'anyio': '4.13.0', 'asyncio': '1.3.0', 'json-report': '1.5.0', 'metadata': '3.1.1'}}
+rootdir: C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx
+configfile: pytest.ini
+plugins: anyio-4.13.0, asyncio-1.3.0, json-report-1.5.0, metadata-3.1.1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 3 items
+
+test_agent.py::test_security_content_safety_decorator_enforcement_on_query_validation_error FAILED [ 33%]
+test_agent.py::test_security_content_safety_decorator_enforcement_on_query_generic_exception FAILED [ 66%]
+test_agent.py::test_security_content_safety_decorator_enforcement_on_health_check PASSED [100%]
+
+================================== FAILURES ===================================
+_ test_security_content_safety_decorator_enforcement_on_query_validation_error _
+
+client = <starlette.testclient.TestClient object at 0x0000022997DCDAC0>
+
+    def test_security_content_safety_decorator_enforcement_on_query_validation_error(client):
+        """
+        Security test: Verifies that the /query endpoint is wrapped with with_content_safety
+        and returns a proper error response (not an unhandled exception) when a validation error occurs.
+        """
+        # The /query endpoint expects POST with no body, so send invalid JSON to trigger JSONDecodeError
+        with patch("agent.with_content_safety", wraps=agent.with_content_safety) as mock_guardrails:
+>           response = client.post("/query", data="{invalid_json: true")  # malformed JSON
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test_agent.py:20: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\testclient.py:546: in post
+    return super().post(
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\httpx\_client.py:1144: in post
+    return self.request(
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\testclient.py:445: in request
+    return super().request(
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\testclient.py:348: in handle_request
+    raise exc
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\testclient.py:345: in handle_request
+    portal.call(self.app, scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\anyio\from_thread.py:334: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\Programs\Python\Python312\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+..\..\Programs\Python\Python312\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\anyio\from_thread.py:259: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\applications.py:1135: in __call__
+    await super().__call__(scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
+    raise exc
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\routing.py:736: in app
+    await route.handle(scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\routing.py:290: in handle
+    await self.app(scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\routing.py:115: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\routing.py:101: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\routing.py:355: in app
+    raw_response = await run_endpoint_function(
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\routing.py:243: in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+modules\guardrails\content_safety_decorator.py:302: in _async_wrapper
+    result = await inner_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+agent.py:527: in query_endpoint
+    result = await agent.process_query()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+modules\guardrails\content_safety_decorator.py:302: in _async_wrapper
+    result = await inner_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+agent.py:475: in process_query
+    context_chunks = await self.chunk_retriever.get_context_chunks(SYSTEM_PROMPT, k=5)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+modules\guardrails\content_safety_decorator.py:302: in _async_wrapper
+    result = await inner_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+agent.py:396: in get_context_chunks
+    return await self._search_client.retrieve_chunks(query, k, selected_titles=SELECTED_DOCUMENT_TITLES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+modules\guardrails\content_safety_decorator.py:302: in _async_wrapper
+    result = await inner_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+agent.py:342: in retrieve_chunks
+    search_client = self.get_client()
+                    ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <agent.AzureAISearchClient object at 0x00000229980A2870>
+
+    def get_client(self):
+        if self._search_client is None:
+            endpoint = Config.AZURE_SEARCH_ENDPOINT
+            index_name = Config.AZURE_SEARCH_INDEX_NAME
+            api_key = Config.AZURE_SEARCH_API_KEY
+            if not endpoint or not index_name or not api_key:
+                raise ValueError("Azure AI Search credentials are not fully configured.")
+>           self._search_client = SearchClient(
+                endpoint=endpoint,
+                index_name=index_name,
+                credential=AzureKeyCredential(api_key),
+            )
+E           TypeError: 'NoneType' object is not callable
+
+agent.py:330: TypeError
+------------------------------ Captured log call ------------------------------
+ERROR    agent:agent.py:223 Unhandled error: 'NoneType' object is not callable
+Traceback (most recent call last):
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\routing.py", line 115, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\routing.py", line 101, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\routing.py", line 355, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\routing.py", line 243, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\modules\guardrails\content_safety_decorator.py", line 302, in _async_wrapper
+    result = await inner_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\agent.py", line 527, in query_endpoint
+    result = await agent.process_query()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\modules\guardrails\content_safety_decorator.py", line 302, in _async_wrapper
+    result = await inner_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\agent.py", line 475, in process_query
+    context_chunks = await self.chunk_retriever.get_context_chunks(SYSTEM_PROMPT, k=5)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\modules\guardrails\content_safety_decorator.py", line 302, in _async_wrapper
+    result = await inner_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\agent.py", line 396, in get_context_chunks
+    return await self._search_client.retrieve_chunks(query, k, selected_titles=SELECTED_DOCUMENT_TITLES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\modules\guardrails\content_safety_decorator.py", line 302, in _async_wrapper
+    result = await inner_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\agent.py", line 342, in retrieve_chunks
+    search_client = self.get_client()
+                    ^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\agent.py", line 330, in get_client
+    self._search_client = SearchClient(
+                          ^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not callable
+_ test_security_content_safety_decorator_enforcement_on_query_generic_exception _
+
+client = <starlette.testclient.TestClient object at 0x0000022997CACE60>
+
+    def test_security_content_safety_decorator_enforcement_on_query_generic_exception(client):
+        """
+        Security test: Verifies that the /query endpoint returns a safe error response
+        if an unexpected exception occurs (simulating a bug in process_query)
+        """
+        # Patch MeetingNotesSummarizerAgent.process_query to raise an Exception
+        # AUTO-FIXED invalid syntax: with patch("agent.MeetingNotesSummarizerAgent.process_query", side_effect=Exception("Simulated failure"):
+>       response = client.post("/query")
+                   ^^^^^^^^^^^^^^^^^^^^^
+
+test_agent.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\testclient.py:546: in post
+    return super().post(
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\httpx\_client.py:1144: in post
+    return self.request(
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\testclient.py:445: in request
+    return super().request(
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\httpx\_client.py:825: in request
+    return self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\httpx\_client.py:914: in send
+    response = self._send_handling_auth(
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\httpx\_client.py:942: in _send_handling_auth
+    response = self._send_handling_redirects(
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\httpx\_client.py:979: in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\httpx\_client.py:1014: in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\testclient.py:348: in handle_request
+    raise exc
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\testclient.py:345: in handle_request
+    portal.call(self.app, scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\anyio\from_thread.py:334: in call
+    return cast(T_Retval, self.start_task_soon(func, *args).result())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+..\..\Programs\Python\Python312\Lib\concurrent\futures\_base.py:456: in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+..\..\Programs\Python\Python312\Lib\concurrent\futures\_base.py:401: in __get_result
+    raise self._exception
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\anyio\from_thread.py:259: in _call_func
+    retval = await retval_or_awaitable
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\applications.py:1135: in __call__
+    await super().__call__(scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\applications.py:107: in __call__
+    await self.middleware_stack(scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\middleware\errors.py:186: in __call__
+    raise exc
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\middleware\errors.py:164: in __call__
+    await self.app(scope, receive, _send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\middleware\exceptions.py:63: in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\middleware\asyncexitstack.py:18: in __call__
+    await self.app(scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\routing.py:716: in __call__
+    await self.middleware_stack(scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\routing.py:736: in app
+    await route.handle(scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\routing.py:290: in handle
+    await self.app(scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\routing.py:115: in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\_exception_handler.py:53: in wrapped_app
+    raise exc
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\_exception_handler.py:42: in wrapped_app
+    await app(scope, receive, sender)
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\routing.py:101: in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\routing.py:355: in app
+    raw_response = await run_endpoint_function(
+..\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\routing.py:243: in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+modules\guardrails\content_safety_decorator.py:302: in _async_wrapper
+    result = await inner_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+agent.py:527: in query_endpoint
+    result = await agent.process_query()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+modules\guardrails\content_safety_decorator.py:302: in _async_wrapper
+    result = await inner_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+agent.py:475: in process_query
+    context_chunks = await self.chunk_retriever.get_context_chunks(SYSTEM_PROMPT, k=5)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+modules\guardrails\content_safety_decorator.py:302: in _async_wrapper
+    result = await inner_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+agent.py:396: in get_context_chunks
+    return await self._search_client.retrieve_chunks(query, k, selected_titles=SELECTED_DOCUMENT_TITLES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+modules\guardrails\content_safety_decorator.py:302: in _async_wrapper
+    result = await inner_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+agent.py:342: in retrieve_chunks
+    search_client = self.get_client()
+                    ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <agent.AzureAISearchClient object at 0x00000229980D7F80>
+
+    def get_client(self):
+        if self._search_client is None:
+            endpoint = Config.AZURE_SEARCH_ENDPOINT
+            index_name = Config.AZURE_SEARCH_INDEX_NAME
+            api_key = Config.AZURE_SEARCH_API_KEY
+            if not endpoint or not index_name or not api_key:
+                raise ValueError("Azure AI Search credentials are not fully configured.")
+>           self._search_client = SearchClient(
+                endpoint=endpoint,
+                index_name=index_name,
+                credential=AzureKeyCredential(api_key),
+            )
+E           TypeError: 'NoneType' object is not callable
+
+agent.py:330: TypeError
+------------------------------ Captured log call ------------------------------
+ERROR    agent:agent.py:223 Unhandled error: 'NoneType' object is not callable
+Traceback (most recent call last):
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\routing.py", line 115, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\routing.py", line 101, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\routing.py", line 355, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\fastapi\routing.py", line 243, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\modules\guardrails\content_safety_decorator.py", line 302, in _async_wrapper
+    result = await inner_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\agent.py", line 527, in query_endpoint
+    result = await agent.process_query()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\modules\guardrails\content_safety_decorator.py", line 302, in _async_wrapper
+    result = await inner_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\agent.py", line 475, in process_query
+    context_chunks = await self.chunk_retriever.get_context_chunks(SYSTEM_PROMPT, k=5)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\modules\guardrails\content_safety_decorator.py", line 302, in _async_wrapper
+    result = await inner_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\agent.py", line 396, in get_context_chunks
+    return await self._search_client.retrieve_chunks(query, k, selected_titles=SELECTED_DOCUMENT_TITLES)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\modules\guardrails\content_safety_decorator.py", line 302, in _async_wrapper
+    result = await inner_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\agent.py", line 342, in retrieve_chunks
+    search_client = self.get_client()
+                    ^^^^^^^^^^^^^^^^^
+  File "C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\agent.py", line 330, in get_client
+    self._search_client = SearchClient(
+                          ^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not callable
+============================== warnings summary ===============================
+test_agent.py::test_security_content_safety_decorator_enforcement_on_query_validation_error
+  C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Lib\site-packages\httpx\_models.py:408: DeprecationWarning: Use 'content=<...>' to upload raw bytes/text content.
+    headers, stream = encode_request(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+--------------------------------- JSON report ---------------------------------
+report saved to: C:\Users\nask\AppData\Local\Temp\test_venv_exec_i5eua9vx\pytest_report.json
+=========================== short test summary info ===========================
+FAILED test_agent.py::test_security_content_safety_decorator_enforcement_on_query_validation_error
+FAILED test_agent.py::test_security_content_safety_decorator_enforcement_on_query_generic_exception
+=================== 2 failed, 1 passed, 1 warning in 4.37s ====================
+
+
+STDERR:
