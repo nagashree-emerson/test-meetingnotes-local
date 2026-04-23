@@ -1,0 +1,23 @@
+=== PYTEST EXECUTION LOG ===
+
+Exit Code: 0
+
+STDOUT:
+============================= test session starts =============================
+platform win32 -- Python 3.12.7, pytest-9.0.3, pluggy-1.6.0 -- C:\Users\nask\AppData\Local\Temp\aba_venv_cache\venv_6dce49989fd295d9e2c661d0ca580c28\Scripts\python.exe
+cachedir: .pytest_cache
+metadata: {'Python': '3.12.7', 'Platform': 'Windows-11-10.0.26200-SP0', 'Packages': {'pytest': '9.0.3', 'pluggy': '1.6.0'}, 'Plugins': {'anyio': '4.13.0', 'asyncio': '1.3.0', 'json-report': '1.5.0', 'metadata': '3.1.1'}}
+rootdir: C:\Users\nask\AppData\Local\Temp\test_venv_exec_k986mtxd
+configfile: pytest.ini
+plugins: anyio-4.13.0, asyncio-1.3.0, json-report-1.5.0, metadata-3.1.1
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 1 item
+
+test_agent.py::test_functional_successful_meeting_notes_summarization PASSED [100%]
+
+--------------------------------- JSON report ---------------------------------
+report saved to: C:\Users\nask\AppData\Local\Temp\test_venv_exec_k986mtxd\pytest_report.json
+============================== 1 passed in 2.28s ==============================
+
+
+STDERR:
