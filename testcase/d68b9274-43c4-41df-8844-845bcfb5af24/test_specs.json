@@ -1,0 +1,14 @@
+{
+  "name": "Performance - LLMService.generate_summary Latency",
+  "description": "Measures the time taken by LLMService.generate_summary to return a summary.",
+  "test_type": "performance",
+  "input": "Call LLMService.generate_summary with a list of context chunks and a user query.",
+  "output": "Measured latency for summary generation.",
+  "success_criteria": [
+    "Summary is returned within expected latency (e.g., < 10 seconds for typical input)"
+  ],
+  "error_scenarios": [
+    "Summary generation exceeds latency threshold",
+    "Timeouts from LLM API"
+  ]
+}
