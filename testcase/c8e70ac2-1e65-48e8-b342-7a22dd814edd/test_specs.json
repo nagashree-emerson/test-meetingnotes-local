@@ -1,0 +1,16 @@
+{
+  "name": "Functional - Fallback When No Meeting Notes Found",
+  "description": "Ensures the agent returns the fallback response when no relevant meeting notes are found.",
+  "test_type": "functional",
+  "input": "POST request to /query endpoint when Azure AI Search returns no chunks.",
+  "output": "A QueryResponse with success=False, summary=None, error set to FALLBACK_RESPONSE.",
+  "success_criteria": [
+    "HTTP status code is 200",
+    "response.success is False",
+    "response.summary is None",
+    "response.error equals FALLBACK_RESPONSE"
+  ],
+  "error_scenarios": [
+    "Unexpected error in chunk retrieval"
+  ]
+}
